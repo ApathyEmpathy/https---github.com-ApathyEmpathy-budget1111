@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
+import axios from "axios";
 import {
     PieChart,
     Pie,
@@ -13,20 +14,26 @@ import {
 
 const Graph = () => {
 
-    const data = [
-        { name: "Rent", Money: 3000 },
-        { name: "Groceries", Money: 1000 },
-        { name: "Phone Bill", Money: 200 },
-        { name: "Utilities", Money: 500 },
-        { name: "Car Insurance", Money: 400 },
-        { name: "Remaining", Money: 700 },
-      ];
+    const [data,setData]=useState([]);
+    useEffect(()=>{
+        getData()
+    },[]);
 
+    const getData =async ()=>{
+        const result=await axios.get("http://localhost:8080/all/exp")
+    
+        setData(result.data)
+        console.log(result.data)
+    
+    }
+
+
+    
 return(
     <><PieChart width={400} height={400}>
         <Pie
 
-            dataKey="Money"
+            dataKey="cost"
             isAnimationActive={false}
             data={data}
             cx={200}
@@ -35,7 +42,9 @@ return(
             fill="#50a22a"
             label />
         <Tooltip />
-    </PieChart><BarChart
+    </PieChart>
+    
+    <BarChart
         width={700}
         height={300}
         data={data}
@@ -55,7 +64,7 @@ return(
             <Tooltip />
             <Legend />
             <CartesianGrid strokeDasharray="3 3" />
-            <Bar dataKey="Money" fill="#50a22a" background={{ fill: "#eee" }} />
+            <Bar dataKey="cost" fill="#50a22a" background={{ fill: "#eee" }} />
         </BarChart></>
 );
         };

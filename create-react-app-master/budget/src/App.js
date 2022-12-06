@@ -17,7 +17,7 @@ function App(){
 
 
     
-     <Home></Home>
+     
       <Graph></Graph>
       <Form></Form>
 
